@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        canvas {
+            width: 100vw;
+            height: 100vh;
+            max-width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+    <canvas></canvas>
+
+    <script>
+        const canvas = document.querySelector('canvas')
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        const ctx = canvas.getContext('2d')
+        let isDown = false
+        let hue = 0
+        let direction = true
+        let width = 20
+
+        function draw(e) {
+            ctx.beginPath()
+            ctx.arc(e.offsetX, e.offsetY, width, 0, 2 * Math.PI)
+            ctx.fill()
+            ctx.fillStyle = `hsl(${hue}, 100%, 50%)`
+            hue++
+            if (hue >= 360) hue = 0
+            if (width >= 30 || width <= 15) direction = !direction;
+
+            (direction) ? width++ : width--
+        }
+        function ease(e) {
+            ctx.beginPath()
+            ctx.arc(e.offsetX, e.offsetY, 20, 0, 2 * Math.PI)
+            ctx.fill()
+            ctx.fillStyle = "#fff"
+        }
+        canvas.addEventListener('mousedown', (e) => {
+            isDown = true
+        })
+        canvas.addEventListener('mousemove', (e) => {
+            if (isDown && e.which === 1) {
+                draw(e)
+            } else if (isDown && e.which === 3) {
+                ease(e)
+            }
+        })
+        canvas.addEventListener('mouseup', () => {
+            isDown = false
+        })
+    </script>
+</body>
+</html>
