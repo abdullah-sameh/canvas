@@ -44,7 +44,7 @@
 
             (direction) ? width++ : width--
         }
-        function ease(e) {
+        function clear(e) {
             ctx.beginPath()
             ctx.arc(e.offsetX, e.offsetY, 20, 0, 2 * Math.PI)
             ctx.fill()
@@ -57,7 +57,7 @@
             if (isDown && e.which === 1) {
                 draw(e)
             } else if (isDown && e.which === 3) {
-                ease(e)
+                clear(e)
             }
         })
         canvas.addEventListener('mouseup', () => {
